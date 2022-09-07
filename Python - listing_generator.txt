@@ -34,7 +34,6 @@ for elem in res:
 # make variables
 approved_suburbs = tuple(sb)
 today = date.today()
-previous_date = date.today() - timedelta(1)
 
 query = {'todays_listings' : f"""SELECT u_id,
                             first_date,
@@ -47,7 +46,7 @@ query = {'todays_listings' : f"""SELECT u_id,
                             bathrooms,
                             land_size
                             FROM real_estate.buy_campaign
-                            WHERE first_date BETWEEN '{previous_date}' AND '{today}' AND property_type = 'house' AND suburb in {approved_suburbs} AND status IS NULL AND (land_size >= '400' OR land_size IS NULL)
+                            WHERE first_date = '{today}' AND property_type = 'house' AND suburb in {approved_suburbs} AND status IS NULL AND (land_size >= '400' OR land_size IS NULL)
                             ORDER BY suburb"""
         }
 query = {k: " ".join(query[k].replace(f"\n","").split()) for k, v in query.items()}
